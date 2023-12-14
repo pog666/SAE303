@@ -1,0 +1,119 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Chart.js example</title>
+    <link href="style.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <header>
+    <h1>SAE <div id='color'>303</div></h1>
+    <h3><div id='color'>Rémy Maison MMI2B1</div></h3>
+    </header>
+    <hr>
+<div class="flex">
+    <div style="width: 500px;"><canvas id="SAE1"></canvas></div>
+    <div style="width: 500px;"><canvas id="SAE2"></canvas>
+    <canvas id="SAE3"></canvas></div><br/>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="SAE.js"></script>
+  <hr>
+
+  <script>
+
+    Chart.defaults.color = "#FFFFFF";
+    const ctx = document.getElementById('SAE1');
+
+    const filteredData = data[2].data.filter(entry => entry.id);
+
+    const uniqueLabels = [...new Set(filteredData.map(entry => entry.name))];
+    const counts = filteredData.reduce((acc, entry) => {
+        acc[entry.name] = (acc[entry.name] || 0) + 1;
+        return acc;
+    }, {});
+
+    const dataCounts = uniqueLabels.map(name => counts[name] || 0);
+
+    new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: uniqueLabels,
+            datasets: [{
+                label: "Nombre d'occurences",
+                data: dataCounts,
+                borderWidth: 1
+            }]
+        },
+    });
+
+const ctx2 = document.getElementById('SAE2');
+
+const satData = data[2].data.filter(entry => entry.status === "SAT");
+
+const uniqueLabels2 = [...new Set(satData.map(entry => entry.name))];
+
+const satCounts = uniqueLabels2.map(label =>
+    satData.filter(entry => entry.name === label).length
+);
+
+new Chart(ctx2, {
+    type: 'bar',
+    data: {
+        labels: uniqueLabels2,
+        datasets: [{
+            label: 'Nombre de status résolus',
+            data: satCounts,
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            y: {
+                beginAtZero: true,
+                max: 200,
+            }
+        },
+        backgroundColor: ["rgba(51, 154, 224, 100)", "rgba(247, 96, 128, 100)", "rgba(244, 152, 61, 100)", "rgba(246, 198, 83, 100)", "rgba(71, 181, 181, 100)", "rgba(153, 102, 255, 100)", "rgba(201, 203, 207, 100)" ,"rgba(51, 154, 224, 100)" ,"rgba(247, 96, 128, 100)" ,"rgba(244, 152, 61, 100)"],
+        }
+    }
+);
+
+const ctx3 = document.getElementById('SAE3');
+
+    const satData2 = data[2].data.filter(entry => entry.status === "SAT");
+
+    const uniqueLabels3 = [...new Set(satData.map(entry => entry.name))];
+
+    const avgTimes = uniqueLabels3.map(label => {
+        const labelData = satData2.filter(entry => entry.name === label);
+        if (labelData.length === 0) return 0;
+        const total = labelData.reduce((acc, entry) => acc + parseFloat(entry.time), 0);
+        const avg = total / labelData.length;
+        return avg;
+    });
+
+    new Chart(ctx3, {
+        type: 'polarArea',
+        data: {
+            labels: uniqueLabels3,
+            datasets: [{
+                label: "Moyenne problème résolu (secondes)",
+                data: avgTimes,
+                borderWidth: 1
+            }]
+        },
+                options: {
+            plugins: {
+                legend: {
+                    display: false
+                }
+            }
+        }
+    });
+
+</script>
