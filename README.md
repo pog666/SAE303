@@ -12,7 +12,8 @@ J’ai rencontré plusieurs problèmes, surtout au niveau du code. J’ai surtou
 
 Le site propose 3 graphiques, le premier est un donut représentant le nombre d’occurrence dans le JSON des solveurs et donc sur combien de problèmes ils ont été appelés. Le deuxième graphique représente le nombre de problèmes qu’il a pu compléter et le troisième est un graphique représentant la moyenne de temps de chaque résolveurs pour les résoudre.
 
-**CAPTURES**
+**CAPTURE**
 
-![image](https://github.com/pog666/SAE303/assets/51862949/d9fa8e45-6e4d-48fc-86dc-5eb60b2d2633)
+![image](https://github.com/pog666/SAE303/assets/51862949/79917214-aed4-48fd-8437-384c38a63547)
+
 
